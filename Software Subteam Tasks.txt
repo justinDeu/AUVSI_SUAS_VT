@@ -2,4 +2,4 @@ Software Subteam Tasks:
 - Connect to drone.
 - Connect to server w/ login info
 - Verify connection to server
-- make a nice change to it
+- Write python for MAVlink
