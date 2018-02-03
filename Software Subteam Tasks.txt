@@ -3,3 +3,4 @@ Software Subteam Tasks:
 - Connect to server w/ login info
 - Verify connection to server
 - make a nice change to it
+- test
