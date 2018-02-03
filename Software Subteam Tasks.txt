@@ -1,4 +1,4 @@
 Software Subteam Tasks:
-- Connect to drone
+- Connect to drone.
 - Connect to server w/ login info
 - Verify connection to server
