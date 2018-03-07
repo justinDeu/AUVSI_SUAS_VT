@@ -1,0 +1,31 @@
+sudo: required
+dist: trusty
+language: generic
+
+services:
+  - docker
+
+install:
+  # Setup tools.
+  - sudo ./tools/setup_tools.sh
+  # Build images in parallel.
+  - echo -e "./server/build.sh\n./client/build.sh" | parallel
+
+script:
+  # Test server.
+  - ./server/test.sh
+  - ./server/run.sh
+  # Test client.
+  - ./client/test.sh
+  # Verify that docs build.
+  - ./tools/build_docs.sh
+  # Check formatting.
+  - ./tools/format.sh --all
+
+deploy:
+  # Push master branch docker images to dockerhub.
+  provider: script
+  script: docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" && docker push auvsisuas/interop-server && docker push auvsisuas/interop-client
+  skip_cleanup: true
+  on:
+    branch: master
