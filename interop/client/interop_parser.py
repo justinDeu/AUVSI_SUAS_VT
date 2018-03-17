@@ -1,5 +1,6 @@
 import interop as interop
 import argparse as argparse
+import pickle as pickle
 
 
 # Attempts to connect to the given interop client with the 
@@ -25,12 +26,12 @@ def download_missions(client):
     missions = client.get_missions()
 
     for mission in missions:
-        file.write(mission)
-        file.write()
+    	# pickle.dump(mission, file, pickle.HIGHEST_PROTOCOL)
+        file.write(str(mission.serialize()))
+        file.write("")
 
-    for line in file:
-        print(line)
-        print()
+        print(mission.serialize())
+
 
     file.close()
 
@@ -47,14 +48,15 @@ def main():
                         help="Username for Account")
     parser.add_argument("--password", required=True,
                         help="Password for Account")
-    parser.add_argument("-missions",
+    parser.add_argument("-missions", action="store_true",
             help="Downloads the missions available to a text file")
 
     args = parser.parse_args()
 
     client = connect_to_client(args.url, args.username, args.password)
 
-    download_missions(client)
+    if (args.missions):
+    	download_missions(client)
 
 
 if __name__ == "__main__":
