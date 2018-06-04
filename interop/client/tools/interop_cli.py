@@ -18,12 +18,27 @@ from upload_odlcs import upload_odlcs
 
 logger = logging.getLogger(__name__)
 
+def print_write_missions(missions):
+    file = open('stationary_obstacles.txt', 'w')
+    for m in missions:
+        obstacle_data = '{}, {}, {}, {}'.format(m.latitude, m.longitude, 
+            m.cylinder_height, m.cylinder_radius)
+        print(obstacle_data)
+        file.write(obstacle_data + '\n')
+
+    file.close()
+
 
 def missions(args, client):
     missions = client.get_missions()
     for m in missions:
         pprint.pprint(m.serialize())
 
+    print('\nStationary Obstacles (lat, long, height, radius):')
+    # Printing the stationary obstacles data
+    obstacles = client.get_obstacles()
+    stationary_obstacles = obstacles[0]
+    print_write_missions(stationary_obstacles)
 
 def odlcs(args, client):
     if args.odlc_dir:
